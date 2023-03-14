@@ -1,0 +1,16 @@
+debug/nodo.o
+debug/expression.o
+debug/instruccion.o
+debug/retorno.o
+debug/literal.o
+debug/funcion_main.o
+debug/lista_instrucciones.o
+debug/print.o
+debug/ParserCtx.o
+debug/environment.o
+debug/symbol.o
+debug/main.o
+debug/mainwindow.o
+debug/parser.o
+debug/singleton.o
+debug/moc_mainwindow.o

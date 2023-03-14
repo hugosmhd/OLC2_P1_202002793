@@ -1,0 +1,16 @@
+release/nodo.o
+release/expression.o
+release/instruccion.o
+release/retorno.o
+release/literal.o
+release/funcion_main.o
+release/lista_instrucciones.o
+release/print.o
+release/ParserCtx.o
+release/environment.o
+release/symbol.o
+release/main.o
+release/mainwindow.o
+release/parser.o
+release/singleton.o
+release/moc_mainwindow.o
