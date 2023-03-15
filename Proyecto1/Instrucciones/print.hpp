@@ -4,6 +4,7 @@
 #include "Abstract/expression.hpp"
 #include "Symbols/environment.hpp"
 #include "patron_singleton/singleton.hpp"
+#include "Symbols/symbol.hpp"
 
 class Print : public Instruction
 {

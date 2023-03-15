@@ -58,7 +58,7 @@
 
 /*tokens*/
 %token <std::string> NUMERO ID STRING SUMA MENOS POR DIV PRINTF
-%token <std::string> VOID INT TSTRING BOOLEAN PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
+%token <std::string> VOID INT TSTRING PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
 
 /* precedencia de operadores */
 %left SUMA MENOS
@@ -73,8 +73,10 @@
 %type<funcion_main*> MAIN;
 %type<Instruction*> PRINT;
 %type<Expression*> PRIMITIVE;
+%type<Expression*> BOOL;
 %type<lista_instrucciones*> LIST_INST;
 %type<Instruction*> INSTRUCTION;
+%type<Expression*> EXPRESSION;
 
 /* printer */
 %printer { yyoutput << $$; } <*>;
@@ -113,15 +115,29 @@ LIST_INST : LIST_INST INSTRUCTION
 INSTRUCTION : PRINT ';' { $$ = $1; }
 ;
 
-PRINT : PRINTF PARA PRIMITIVE PARC { $$ = new Print(0,0,$3); }
+PRINT : PRINTF PARA EXPRESSION PARC { $$ = new Print(0,0,$3); }
+;
+
+EXPRESSION:
+    PRIMITIVE { $$ = $1; }
 ;
 
 PRIMITIVE : STRING
-       {
-           std::string str1 = $1.erase(0,1);
-           std::string str2 = str1.erase(str1.length()-1,1);
-           $$ = new Literal(0,0,STRING,str2,0,false);
-       }
+   {
+       std::string str1 = $1.erase(0,1);
+       std::string str2 = str1.erase(str1.length()-1,1);
+       $$ = new Literal(0,0,STRING,str2,0,false);
+   }
+    | NUMERO
+    {
+        int num = stoi($1);
+        $$ = new Literal(0,0,INTEGER,"",num,false);
+    }
+    | BOOL { $$ = $1; }
+;
+
+BOOL : RTRUE { $$ = new Literal(0,0,BOOL,"",0,true); }
+   | RFALSE { $$ = new Literal(0,0,BOOL,"",0,false); }
 ;
 
 

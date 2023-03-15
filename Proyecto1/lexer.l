@@ -61,8 +61,14 @@ ID  {LETRAS}({DIGITO}|{LETRAS}|"_")*
 ")"     return Parser::symbol_type( token::PARC, loc ); //
 ","     return Parser::symbol_type( token::COMA, loc ); //
 
-"printf"    return Parser::symbol_type( token::PRINTF, loc ); //
+"printf"    return Parser::symbol_type( token::PRINTF, loc );
+
 "string"    return Parser::symbol_type( token::TSTRING, loc );
+"int"    return Parser::symbol_type( token::INT, loc );
+
+"true"    return Parser::symbol_type( token::RTRUE, loc );
+"false"    return Parser::symbol_type( token::RFALSE, loc );
+
 
 {ID}  return Parser::make_ID(yytext, loc);
 {NUMERO} return Parser::make_NUMERO(yytext, loc);
@@ -79,4 +85,3 @@ ID  {LETRAS}({DIGITO}|{LETRAS}|"_")*
 
 
  // más código - normalmente para manejo de errores
-

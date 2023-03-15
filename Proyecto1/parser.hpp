@@ -396,7 +396,9 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // EXPRESSION
       // PRIMITIVE
+      // BOOL
       char dummy1[sizeof (Expression*)];
 
       // INSTRUCTION
@@ -421,7 +423,6 @@ namespace yy {
       // VOID
       // INT
       // TSTRING
-      // BOOLEAN
       // PARA
       // PARC
       // RMAIN
@@ -493,17 +494,16 @@ namespace yy {
     VOID = 266,                    // VOID
     INT = 267,                     // INT
     TSTRING = 268,                 // TSTRING
-    BOOLEAN = 269,                 // BOOLEAN
-    PARA = 270,                    // PARA
-    PARC = 271,                    // PARC
-    RMAIN = 272,                   // RMAIN
-    LLAVA = 273,                   // LLAVA
-    LLAVC = 274,                   // LLAVC
-    RTRUE = 275,                   // RTRUE
-    RFALSE = 276,                  // RFALSE
-    CORA = 277,                    // CORA
-    CORC = 278,                    // CORC
-    COMA = 279                     // COMA
+    PARA = 269,                    // PARA
+    PARC = 270,                    // PARC
+    RMAIN = 271,                   // RMAIN
+    LLAVA = 272,                   // LLAVA
+    LLAVC = 273,                   // LLAVC
+    RTRUE = 274,                   // RTRUE
+    RFALSE = 275,                  // RFALSE
+    CORA = 276,                    // CORA
+    CORC = 277,                    // CORC
+    COMA = 278                     // COMA
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -520,7 +520,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 26, ///< Number of tokens.
+        YYNTOKENS = 25, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // END
         S_YYerror = 1,                           // error
@@ -536,25 +536,26 @@ namespace yy {
         S_VOID = 11,                             // VOID
         S_INT = 12,                              // INT
         S_TSTRING = 13,                          // TSTRING
-        S_BOOLEAN = 14,                          // BOOLEAN
-        S_PARA = 15,                             // PARA
-        S_PARC = 16,                             // PARC
-        S_RMAIN = 17,                            // RMAIN
-        S_LLAVA = 18,                            // LLAVA
-        S_LLAVC = 19,                            // LLAVC
-        S_RTRUE = 20,                            // RTRUE
-        S_RFALSE = 21,                           // RFALSE
-        S_CORA = 22,                             // CORA
-        S_CORC = 23,                             // CORC
-        S_COMA = 24,                             // COMA
-        S_25_ = 25,                              // ';'
-        S_YYACCEPT = 26,                         // $accept
-        S_START = 27,                            // START
-        S_MAIN = 28,                             // MAIN
-        S_LIST_INST = 29,                        // LIST_INST
-        S_INSTRUCTION = 30,                      // INSTRUCTION
-        S_PRINT = 31,                            // PRINT
-        S_PRIMITIVE = 32                         // PRIMITIVE
+        S_PARA = 14,                             // PARA
+        S_PARC = 15,                             // PARC
+        S_RMAIN = 16,                            // RMAIN
+        S_LLAVA = 17,                            // LLAVA
+        S_LLAVC = 18,                            // LLAVC
+        S_RTRUE = 19,                            // RTRUE
+        S_RFALSE = 20,                           // RFALSE
+        S_CORA = 21,                             // CORA
+        S_CORC = 22,                             // CORC
+        S_COMA = 23,                             // COMA
+        S_24_ = 24,                              // ';'
+        S_YYACCEPT = 25,                         // $accept
+        S_START = 26,                            // START
+        S_MAIN = 27,                             // MAIN
+        S_LIST_INST = 28,                        // LIST_INST
+        S_INSTRUCTION = 29,                      // INSTRUCTION
+        S_PRINT = 30,                            // PRINT
+        S_EXPRESSION = 31,                       // EXPRESSION
+        S_PRIMITIVE = 32,                        // PRIMITIVE
+        S_BOOL = 33                              // BOOL
       };
     };
 
@@ -591,7 +592,9 @@ namespace yy {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
+      case symbol_kind::S_BOOL: // BOOL
         value.move< Expression* > (std::move (that.value));
         break;
 
@@ -620,7 +623,6 @@ namespace yy {
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
-      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -751,7 +753,9 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
+      case symbol_kind::S_BOOL: // BOOL
         value.template destroy< Expression* > ();
         break;
 
@@ -780,7 +784,6 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
-      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -1159,21 +1162,6 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_BOOLEAN (std::string v, location_type l)
-      {
-        return symbol_type (token::BOOLEAN, std::move (v), std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_BOOLEAN (const std::string& v, const location_type& l)
-      {
-        return symbol_type (token::BOOLEAN, v, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_PARA (std::string v, location_type l)
       {
         return symbol_type (token::PARA, std::move (v), std::move (l));
@@ -1424,7 +1412,7 @@ switch (yykind)
 
 #if YYDEBUG
     // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-    static const signed char yyrline_[];
+    static const unsigned char yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r) const;
     /// Print the state stack on the debug stream.
@@ -1651,8 +1639,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 7,     ///< Last index in yytable_.
-      yynnts_ = 7,  ///< Number of nonterminal symbols.
+      yylast_ = 17,     ///< Last index in yytable_.
+      yynnts_ = 9,  ///< Number of nonterminal symbols.
       yyfinal_ = 8 ///< Termination state number.
     };
 
@@ -1679,7 +1667,7 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    24,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1701,10 +1689,10 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
+      15,    16,    17,    18,    19,    20,    21,    22,    23
     };
     // Last valid token kind.
-    const int code_max = 279;
+    const int code_max = 278;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1723,7 +1711,9 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
+      case symbol_kind::S_BOOL: // BOOL
         value.copy< Expression* > (YY_MOVE (that.value));
         break;
 
@@ -1752,7 +1742,6 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
-      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -1797,7 +1786,9 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
+      case symbol_kind::S_BOOL: // BOOL
         value.move< Expression* > (YY_MOVE (s.value));
         break;
 
@@ -1826,7 +1817,6 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
-      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -1906,7 +1896,7 @@ switch (yykind)
 
 
 } // yy
-#line 1910 "parser.hpp"
+#line 1900 "parser.hpp"
 
 
 
