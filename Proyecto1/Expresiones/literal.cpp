@@ -1,6 +1,6 @@
 #include "literal.hpp"
 
-Literal::Literal(int _line, int _column, Type _type, std::string _strVal, int _numVal, bool _boolVal)
+Literal::Literal(int _line, int _column, Type _type, std::string _strVal, int _numVal, bool _boolVal, float _floatVal)
 {
     this->line = _line;
     this->column = _column;
@@ -8,6 +8,7 @@ Literal::Literal(int _line, int _column, Type _type, std::string _strVal, int _n
     this->strVal = _strVal;
     this->numVal = _numVal;
     this->boolVal = _boolVal;
+    this->floatVal = _floatVal;
 }
 
 Symbol Literal::ejecutar(Environment *env)
@@ -19,11 +20,14 @@ Symbol Literal::ejecutar(Environment *env)
             break;
         case STRING:
             ret = Symbol(line, column, "", type, &strVal);
-            std::cout << ret.type << std::endl;
-            std::cout << ret.value << std::endl;
+            //std::cout << ret.type << std::endl;
+            //std::cout << ret.value << std::endl;
             break;
         case BOOL:
             ret = Symbol(line, column, "", type, &boolVal);
+            break;
+        case FLOAT:
+            ret = Symbol(line, column, "", type, &floatVal);
             break;
         default:
             break;

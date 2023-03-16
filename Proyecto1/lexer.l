@@ -37,7 +37,7 @@ DIGITO [0-9]
 LETRAS [a-zA-ZñÑ]
 NUMERO {DIGITO}+
 ID  {LETRAS}({DIGITO}|{LETRAS}|"_")*
-
+DECIMAL {NUMERO}"."{NUMERO}
 %%
 
 %{
@@ -72,6 +72,7 @@ ID  {LETRAS}({DIGITO}|{LETRAS}|"_")*
 
 {ID}  return Parser::make_ID(yytext, loc);
 {NUMERO} return Parser::make_NUMERO(yytext, loc);
+{DECIMAL} return Parser::make_DECIMAL(yytext, loc);
 \"(\\.|[^"\\])*\" return Parser::make_STRING (yytext, loc); //
 
 .  {std::cerr<<loc <<": "<<"error token no esperado"<<  std::endl; }

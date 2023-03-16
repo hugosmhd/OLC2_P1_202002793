@@ -57,7 +57,7 @@
 %token END 0;
 
 /*tokens*/
-%token <std::string> NUMERO ID STRING SUMA MENOS POR DIV PRINTF
+%token <std::string> NUMERO ID STRING DECIMAL SUMA MENOS POR DIV PRINTF
 %token <std::string> VOID INT TSTRING PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
 
 /* precedencia de operadores */
@@ -126,18 +126,23 @@ PRIMITIVE : STRING
    {
        std::string str1 = $1.erase(0,1);
        std::string str2 = str1.erase(str1.length()-1,1);
-       $$ = new Literal(0,0,STRING,str2,0,false);
+       $$ = new Literal(0,0,STRING,str2,0,false,0.0);
    }
     | NUMERO
     {
         int num = stoi($1);
-        $$ = new Literal(0,0,INTEGER,"",num,false);
+        $$ = new Literal(0,0,INTEGER,"",num,false,0.0);
+    }
+    | DECIMAL
+    {
+        float num = stof($1);
+        $$ = new Literal(0,0,FLOAT,"",0,false, num);
     }
     | BOOL { $$ = $1; }
 ;
 
-BOOL : RTRUE { $$ = new Literal(0,0,BOOL,"",0,true); }
-   | RFALSE { $$ = new Literal(0,0,BOOL,"",0,false); }
+BOOL : RTRUE { $$ = new Literal(0,0,BOOL,"",0,true,0.0); }
+   | RFALSE { $$ = new Literal(0,0,BOOL,"",0,false,0.0); }
 ;
 
 

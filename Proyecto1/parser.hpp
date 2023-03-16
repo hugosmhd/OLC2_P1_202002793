@@ -415,6 +415,7 @@ namespace yy {
       // NUMERO
       // ID
       // STRING
+      // DECIMAL
       // SUMA
       // MENOS
       // POR
@@ -486,24 +487,25 @@ namespace yy {
     NUMERO = 258,                  // NUMERO
     ID = 259,                      // ID
     STRING = 260,                  // STRING
-    SUMA = 261,                    // SUMA
-    MENOS = 262,                   // MENOS
-    POR = 263,                     // POR
-    DIV = 264,                     // DIV
-    PRINTF = 265,                  // PRINTF
-    VOID = 266,                    // VOID
-    INT = 267,                     // INT
-    TSTRING = 268,                 // TSTRING
-    PARA = 269,                    // PARA
-    PARC = 270,                    // PARC
-    RMAIN = 271,                   // RMAIN
-    LLAVA = 272,                   // LLAVA
-    LLAVC = 273,                   // LLAVC
-    RTRUE = 274,                   // RTRUE
-    RFALSE = 275,                  // RFALSE
-    CORA = 276,                    // CORA
-    CORC = 277,                    // CORC
-    COMA = 278                     // COMA
+    DECIMAL = 261,                 // DECIMAL
+    SUMA = 262,                    // SUMA
+    MENOS = 263,                   // MENOS
+    POR = 264,                     // POR
+    DIV = 265,                     // DIV
+    PRINTF = 266,                  // PRINTF
+    VOID = 267,                    // VOID
+    INT = 268,                     // INT
+    TSTRING = 269,                 // TSTRING
+    PARA = 270,                    // PARA
+    PARC = 271,                    // PARC
+    RMAIN = 272,                   // RMAIN
+    LLAVA = 273,                   // LLAVA
+    LLAVC = 274,                   // LLAVC
+    RTRUE = 275,                   // RTRUE
+    RFALSE = 276,                  // RFALSE
+    CORA = 277,                    // CORA
+    CORC = 278,                    // CORC
+    COMA = 279                     // COMA
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -520,7 +522,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 25, ///< Number of tokens.
+        YYNTOKENS = 26, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // END
         S_YYerror = 1,                           // error
@@ -528,34 +530,35 @@ namespace yy {
         S_NUMERO = 3,                            // NUMERO
         S_ID = 4,                                // ID
         S_STRING = 5,                            // STRING
-        S_SUMA = 6,                              // SUMA
-        S_MENOS = 7,                             // MENOS
-        S_POR = 8,                               // POR
-        S_DIV = 9,                               // DIV
-        S_PRINTF = 10,                           // PRINTF
-        S_VOID = 11,                             // VOID
-        S_INT = 12,                              // INT
-        S_TSTRING = 13,                          // TSTRING
-        S_PARA = 14,                             // PARA
-        S_PARC = 15,                             // PARC
-        S_RMAIN = 16,                            // RMAIN
-        S_LLAVA = 17,                            // LLAVA
-        S_LLAVC = 18,                            // LLAVC
-        S_RTRUE = 19,                            // RTRUE
-        S_RFALSE = 20,                           // RFALSE
-        S_CORA = 21,                             // CORA
-        S_CORC = 22,                             // CORC
-        S_COMA = 23,                             // COMA
-        S_24_ = 24,                              // ';'
-        S_YYACCEPT = 25,                         // $accept
-        S_START = 26,                            // START
-        S_MAIN = 27,                             // MAIN
-        S_LIST_INST = 28,                        // LIST_INST
-        S_INSTRUCTION = 29,                      // INSTRUCTION
-        S_PRINT = 30,                            // PRINT
-        S_EXPRESSION = 31,                       // EXPRESSION
-        S_PRIMITIVE = 32,                        // PRIMITIVE
-        S_BOOL = 33                              // BOOL
+        S_DECIMAL = 6,                           // DECIMAL
+        S_SUMA = 7,                              // SUMA
+        S_MENOS = 8,                             // MENOS
+        S_POR = 9,                               // POR
+        S_DIV = 10,                              // DIV
+        S_PRINTF = 11,                           // PRINTF
+        S_VOID = 12,                             // VOID
+        S_INT = 13,                              // INT
+        S_TSTRING = 14,                          // TSTRING
+        S_PARA = 15,                             // PARA
+        S_PARC = 16,                             // PARC
+        S_RMAIN = 17,                            // RMAIN
+        S_LLAVA = 18,                            // LLAVA
+        S_LLAVC = 19,                            // LLAVC
+        S_RTRUE = 20,                            // RTRUE
+        S_RFALSE = 21,                           // RFALSE
+        S_CORA = 22,                             // CORA
+        S_CORC = 23,                             // CORC
+        S_COMA = 24,                             // COMA
+        S_25_ = 25,                              // ';'
+        S_YYACCEPT = 26,                         // $accept
+        S_START = 27,                            // START
+        S_MAIN = 28,                             // MAIN
+        S_LIST_INST = 29,                        // LIST_INST
+        S_INSTRUCTION = 30,                      // INSTRUCTION
+        S_PRINT = 31,                            // PRINT
+        S_EXPRESSION = 32,                       // EXPRESSION
+        S_PRIMITIVE = 33,                        // PRIMITIVE
+        S_BOOL = 34                              // BOOL
       };
     };
 
@@ -615,6 +618,7 @@ namespace yy {
       case symbol_kind::S_NUMERO: // NUMERO
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_DECIMAL: // DECIMAL
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
@@ -776,6 +780,7 @@ switch (yykind)
       case symbol_kind::S_NUMERO: // NUMERO
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_DECIMAL: // DECIMAL
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
@@ -1037,6 +1042,21 @@ switch (yykind)
       make_STRING (const std::string& v, const location_type& l)
       {
         return symbol_type (token::STRING, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DECIMAL (std::string v, location_type l)
+      {
+        return symbol_type (token::DECIMAL, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_DECIMAL (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::DECIMAL, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1639,7 +1659,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 17,     ///< Last index in yytable_.
+      yylast_ = 18,     ///< Last index in yytable_.
       yynnts_ = 9,  ///< Number of nonterminal symbols.
       yyfinal_ = 8 ///< Termination state number.
     };
@@ -1667,7 +1687,7 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    24,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1689,10 +1709,10 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
     };
     // Last valid token kind.
-    const int code_max = 278;
+    const int code_max = 279;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1734,6 +1754,7 @@ switch (yykind)
       case symbol_kind::S_NUMERO: // NUMERO
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_DECIMAL: // DECIMAL
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
@@ -1809,6 +1830,7 @@ switch (yykind)
       case symbol_kind::S_NUMERO: // NUMERO
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_DECIMAL: // DECIMAL
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
@@ -1896,7 +1918,7 @@ switch (yykind)
 
 
 } // yy
-#line 1900 "parser.hpp"
+#line 1922 "parser.hpp"
 
 
 

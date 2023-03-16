@@ -11,7 +11,8 @@ public:
     Type type;
     std::string strVal;
     bool boolVal;
-    Literal(int, int, Type, std::string, int, bool);
+    float floatVal;
+    Literal(int, int, Type, std::string, int, bool, float);
     Symbol ejecutar(Environment *env) override;
 };
 

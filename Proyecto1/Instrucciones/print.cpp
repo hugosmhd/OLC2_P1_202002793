@@ -19,6 +19,10 @@ void Print::ejecutar(Environment *env) {
             //tree->ConsoleOut += std::to_string(*static_cast<int*>(sym.Value))+ "\n";
             single->addConsola(std::to_string(*static_cast<int*>(symb.value)) + "\n");
             break;
+        case FLOAT:
+            //tree->ConsoleOut += std::to_string(*static_cast<int*>(sym.Value))+ "\n";
+            single->addConsola(std::to_string(*static_cast<float*>(symb.value)) + "\n");
+            break;
         case BOOL:
             if(*static_cast<bool*>(symb.value)){
                 single->addConsola("true\n");
