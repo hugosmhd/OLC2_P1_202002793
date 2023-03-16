@@ -14,6 +14,7 @@ SOURCES += \
     Abstract/instruccion.cpp \
     Abstract/retorno.cpp \
     Expresiones/literal.cpp \
+    Instrucciones/declaracion.cpp \
     Instrucciones/funcion_main.cpp \
     Instrucciones/lista_instrucciones.cpp \
     Instrucciones/print.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     Abstract/instruccion.hpp \
     Abstract/retorno.hpp \
     Expresiones/literal.hpp \
+    Instrucciones/declaracion.hpp \
     Instrucciones/funcion_main.hpp \
     Instrucciones/lista_instrucciones.hpp \
     Instrucciones/print.hpp \

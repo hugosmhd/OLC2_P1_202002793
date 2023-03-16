@@ -63,9 +63,10 @@
     #include "Instrucciones/print.hpp"
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
+    #include "Instrucciones/declaracion.hpp"
 
 
-#line 69 "parser.hpp"
+#line 70 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -200,7 +201,7 @@
 #endif
 
 namespace yy {
-#line 204 "parser.hpp"
+#line 205 "parser.hpp"
 
 
 
@@ -396,21 +397,26 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // TIPOS_DECLARACION
       // EXPRESSION
       // PRIMITIVE
-      // BOOL
+      // BOOLEANO
       char dummy1[sizeof (Expression*)];
 
       // INSTRUCTION
       // PRINT
+      // DECLARACION
       char dummy2[sizeof (Instruction*)];
+
+      // TIPOS
+      char dummy3[sizeof (Type)];
 
       // START
       // MAIN
-      char dummy3[sizeof (funcion_main*)];
+      char dummy4[sizeof (funcion_main*)];
 
       // LIST_INST
-      char dummy4[sizeof (lista_instrucciones*)];
+      char dummy5[sizeof (lista_instrucciones*)];
 
       // NUMERO
       // ID
@@ -424,6 +430,8 @@ namespace yy {
       // VOID
       // INT
       // TSTRING
+      // FLOTANTE
+      // BOOLEAN
       // PARA
       // PARC
       // RMAIN
@@ -434,7 +442,7 @@ namespace yy {
       // CORA
       // CORC
       // COMA
-      char dummy5[sizeof (std::string)];
+      char dummy6[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -496,16 +504,18 @@ namespace yy {
     VOID = 267,                    // VOID
     INT = 268,                     // INT
     TSTRING = 269,                 // TSTRING
-    PARA = 270,                    // PARA
-    PARC = 271,                    // PARC
-    RMAIN = 272,                   // RMAIN
-    LLAVA = 273,                   // LLAVA
-    LLAVC = 274,                   // LLAVC
-    RTRUE = 275,                   // RTRUE
-    RFALSE = 276,                  // RFALSE
-    CORA = 277,                    // CORA
-    CORC = 278,                    // CORC
-    COMA = 279                     // COMA
+    FLOTANTE = 270,                // FLOTANTE
+    BOOLEAN = 271,                 // BOOLEAN
+    PARA = 272,                    // PARA
+    PARC = 273,                    // PARC
+    RMAIN = 274,                   // RMAIN
+    LLAVA = 275,                   // LLAVA
+    LLAVC = 276,                   // LLAVC
+    RTRUE = 277,                   // RTRUE
+    RFALSE = 278,                  // RFALSE
+    CORA = 279,                    // CORA
+    CORC = 280,                    // CORC
+    COMA = 281                     // COMA
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -522,7 +532,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 26, ///< Number of tokens.
+        YYNTOKENS = 29, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // END
         S_YYerror = 1,                           // error
@@ -539,26 +549,32 @@ namespace yy {
         S_VOID = 12,                             // VOID
         S_INT = 13,                              // INT
         S_TSTRING = 14,                          // TSTRING
-        S_PARA = 15,                             // PARA
-        S_PARC = 16,                             // PARC
-        S_RMAIN = 17,                            // RMAIN
-        S_LLAVA = 18,                            // LLAVA
-        S_LLAVC = 19,                            // LLAVC
-        S_RTRUE = 20,                            // RTRUE
-        S_RFALSE = 21,                           // RFALSE
-        S_CORA = 22,                             // CORA
-        S_CORC = 23,                             // CORC
-        S_COMA = 24,                             // COMA
-        S_25_ = 25,                              // ';'
-        S_YYACCEPT = 26,                         // $accept
-        S_START = 27,                            // START
-        S_MAIN = 28,                             // MAIN
-        S_LIST_INST = 29,                        // LIST_INST
-        S_INSTRUCTION = 30,                      // INSTRUCTION
-        S_PRINT = 31,                            // PRINT
-        S_EXPRESSION = 32,                       // EXPRESSION
-        S_PRIMITIVE = 33,                        // PRIMITIVE
-        S_BOOL = 34                              // BOOL
+        S_FLOTANTE = 15,                         // FLOTANTE
+        S_BOOLEAN = 16,                          // BOOLEAN
+        S_PARA = 17,                             // PARA
+        S_PARC = 18,                             // PARC
+        S_RMAIN = 19,                            // RMAIN
+        S_LLAVA = 20,                            // LLAVA
+        S_LLAVC = 21,                            // LLAVC
+        S_RTRUE = 22,                            // RTRUE
+        S_RFALSE = 23,                           // RFALSE
+        S_CORA = 24,                             // CORA
+        S_CORC = 25,                             // CORC
+        S_COMA = 26,                             // COMA
+        S_27_ = 27,                              // ';'
+        S_28_ = 28,                              // '='
+        S_YYACCEPT = 29,                         // $accept
+        S_START = 30,                            // START
+        S_MAIN = 31,                             // MAIN
+        S_LIST_INST = 32,                        // LIST_INST
+        S_INSTRUCTION = 33,                      // INSTRUCTION
+        S_PRINT = 34,                            // PRINT
+        S_DECLARACION = 35,                      // DECLARACION
+        S_TIPOS_DECLARACION = 36,                // TIPOS_DECLARACION
+        S_EXPRESSION = 37,                       // EXPRESSION
+        S_PRIMITIVE = 38,                        // PRIMITIVE
+        S_BOOLEANO = 39,                         // BOOLEANO
+        S_TIPOS = 40                             // TIPOS
       };
     };
 
@@ -595,15 +611,21 @@ namespace yy {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
-      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.move< Expression* > (std::move (that.value));
         break;
 
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
+      case symbol_kind::S_DECLARACION: // DECLARACION
         value.move< Instruction* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_TIPOS: // TIPOS
+        value.move< Type > (std::move (that.value));
         break;
 
       case symbol_kind::S_START: // START
@@ -627,6 +649,8 @@ namespace yy {
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
+      case symbol_kind::S_FLOTANTE: // FLOTANTE
+      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -685,6 +709,20 @@ namespace yy {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const Instruction*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Type&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Type& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -757,15 +795,21 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
-      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.template destroy< Expression* > ();
         break;
 
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
+      case symbol_kind::S_DECLARACION: // DECLARACION
         value.template destroy< Instruction* > ();
+        break;
+
+      case symbol_kind::S_TIPOS: // TIPOS
+        value.template destroy< Type > ();
         break;
 
       case symbol_kind::S_START: // START
@@ -789,6 +833,8 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
+      case symbol_kind::S_FLOTANTE: // FLOTANTE
+      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -1177,6 +1223,36 @@ switch (yykind)
       make_TSTRING (const std::string& v, const location_type& l)
       {
         return symbol_type (token::TSTRING, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_FLOTANTE (std::string v, location_type l)
+      {
+        return symbol_type (token::FLOTANTE, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_FLOTANTE (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::FLOTANTE, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_BOOLEAN (std::string v, location_type l)
+      {
+        return symbol_type (token::BOOLEAN, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_BOOLEAN (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::BOOLEAN, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1659,9 +1735,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 18,     ///< Last index in yytable_.
-      yynnts_ = 9,  ///< Number of nonterminal symbols.
-      yyfinal_ = 8 ///< Termination state number.
+      yylast_ = 20,     ///< Last index in yytable_.
+      yynnts_ = 12,  ///< Number of nonterminal symbols.
+      yyfinal_ = 14 ///< Termination state number.
     };
 
 
@@ -1687,8 +1763,8 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    27,
+       2,    28,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1709,10 +1785,11 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26
     };
     // Last valid token kind.
-    const int code_max = 279;
+    const int code_max = 281;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1731,15 +1808,21 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
-      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.copy< Expression* > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
+      case symbol_kind::S_DECLARACION: // DECLARACION
         value.copy< Instruction* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_TIPOS: // TIPOS
+        value.copy< Type > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_START: // START
@@ -1763,6 +1846,8 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
+      case symbol_kind::S_FLOTANTE: // FLOTANTE
+      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -1807,15 +1892,21 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
-      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.move< Expression* > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
+      case symbol_kind::S_DECLARACION: // DECLARACION
         value.move< Instruction* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_TIPOS: // TIPOS
+        value.move< Type > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_START: // START
@@ -1839,6 +1930,8 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
+      case symbol_kind::S_FLOTANTE: // FLOTANTE
+      case symbol_kind::S_BOOLEAN: // BOOLEAN
       case symbol_kind::S_PARA: // PARA
       case symbol_kind::S_PARC: // PARC
       case symbol_kind::S_RMAIN: // RMAIN
@@ -1918,7 +2011,7 @@ switch (yykind)
 
 
 } // yy
-#line 1922 "parser.hpp"
+#line 2015 "parser.hpp"
 
 
 

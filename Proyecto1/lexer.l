@@ -65,6 +65,8 @@ DECIMAL {NUMERO}"."{NUMERO}
 
 "string"    return Parser::symbol_type( token::TSTRING, loc );
 "int"    return Parser::symbol_type( token::INT, loc );
+"float"    return Parser::symbol_type( token::FLOTANTE, loc );
+"bool"    return Parser::symbol_type( token::BOOLEAN, loc );
 
 "true"    return Parser::symbol_type( token::RTRUE, loc );
 "false"    return Parser::symbol_type( token::RFALSE, loc );

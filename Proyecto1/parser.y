@@ -47,6 +47,7 @@
     #include "Instrucciones/print.hpp"
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
+    #include "Instrucciones/declaracion.hpp"
 
 }
 
@@ -58,7 +59,7 @@
 
 /*tokens*/
 %token <std::string> NUMERO ID STRING DECIMAL SUMA MENOS POR DIV PRINTF
-%token <std::string> VOID INT TSTRING PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
+%token <std::string> VOID INT TSTRING FLOTANTE BOOLEAN PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
 
 /* precedencia de operadores */
 %left SUMA MENOS
@@ -72,11 +73,14 @@
 %type<funcion_main*> START;
 %type<funcion_main*> MAIN;
 %type<Instruction*> PRINT;
+%type<Instruction*> DECLARACION;
 %type<Expression*> PRIMITIVE;
-%type<Expression*> BOOL;
+%type<Expression*> BOOLEANO;
+%type<Expression*> TIPOS_DECLARACION;
 %type<lista_instrucciones*> LIST_INST;
 %type<Instruction*> INSTRUCTION;
 %type<Expression*> EXPRESSION;
+%type<Type> TIPOS;
 
 /* printer */
 %printer { yyoutput << $$; } <*>;
@@ -113,9 +117,17 @@ LIST_INST : LIST_INST INSTRUCTION
 ;
 
 INSTRUCTION : PRINT ';' { $$ = $1; }
+    | DECLARACION ';' { $$ = $1; }
 ;
 
 PRINT : PRINTF PARA EXPRESSION PARC { $$ = new Print(0,0,$3); }
+;
+
+DECLARACION : TIPOS ID TIPOS_DECLARACION { $$ = new Declaracion(0,0,$1,"hola",$3); }
+;
+
+TIPOS_DECLARACION: '=' EXPRESSION { $$ = $2; }
+    |%empty { $$ = new Literal(0,0,NULO,"",0,false,0.0); }
 ;
 
 EXPRESSION:
@@ -138,13 +150,18 @@ PRIMITIVE : STRING
         float num = stof($1);
         $$ = new Literal(0,0,FLOAT,"",0,false, num);
     }
-    | BOOL { $$ = $1; }
+    | BOOLEANO { $$ = $1; }
 ;
 
-BOOL : RTRUE { $$ = new Literal(0,0,BOOL,"",0,true,0.0); }
+BOOLEANO : RTRUE { $$ = new Literal(0,0,BOOL,"",0,true,0.0); }
    | RFALSE { $$ = new Literal(0,0,BOOL,"",0,false,0.0); }
 ;
 
+TIPOS : INT { $$ = INTEGER; }
+   | FLOTANTE { $$ = FLOAT; }
+   | TSTRING { $$ = STRING; }
+   | BOOLEAN { $$ = BOOL; }
+;
 
 %%
 
