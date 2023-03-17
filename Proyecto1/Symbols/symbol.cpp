@@ -10,3 +10,7 @@ Symbol::Symbol(int _line, int _column, std::string _id, Type _type, void * _valu
     this->type = _type;
     this->value = _value;
 }
+
+void Symbol::setType(Type type) {
+    this->type = type;
+}

@@ -14,6 +14,8 @@ public:
     Environment();
     void guardar_variable(Symbol sym, std::string id); //, ast *tree
     Symbol get_variable(std::string id); //, ast *tree
+    void actualizar_variable(Symbol sym, std::string id);
+
 };
 
 #endif // ENVIRONMENT_HPP

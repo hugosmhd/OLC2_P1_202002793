@@ -45,6 +45,7 @@
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
     #include "Instrucciones/print.hpp"
+    #include "Instrucciones/asignacion.hpp"
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
     #include "Instrucciones/declaracion.hpp"
@@ -74,6 +75,7 @@
 %type<funcion_main*> MAIN;
 %type<Instruction*> PRINT;
 %type<Instruction*> DECLARACION;
+%type<Instruction*> ASIGNACION;
 %type<Expression*> PRIMITIVE;
 %type<Expression*> BOOLEANO;
 %type<Expression*> TIPOS_DECLARACION;
@@ -118,12 +120,17 @@ LIST_INST : LIST_INST INSTRUCTION
 
 INSTRUCTION : PRINT ';' { $$ = $1; }
     | DECLARACION ';' { $$ = $1; }
+    | ASIGNACION ';' { $$ = $1; }
 ;
 
 PRINT : PRINTF PARA EXPRESSION PARC { $$ = new Print(0,0,$3); }
 ;
 
-DECLARACION : TIPOS ID TIPOS_DECLARACION { $$ = new Declaracion(0,0,$1,"hola",$3); }
+DECLARACION : TIPOS ID TIPOS_DECLARACION { $$ = new Declaracion(0,0,$1,$2,$3); }
+;
+
+ASIGNACION :
+    ID '=' EXPRESSION { $$ = new Asignacion(0,0, $1, $3); }
 ;
 
 TIPOS_DECLARACION: '=' EXPRESSION { $$ = $2; }

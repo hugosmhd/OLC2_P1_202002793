@@ -12,6 +12,7 @@ public:
     void *value;
     Symbol();
     Symbol(int line, int column, std::string id, Type type, void *value);
+    void setType(Type type);
 };
 
 #endif // SYMBOL_HPP

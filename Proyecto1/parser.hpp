@@ -61,12 +61,13 @@
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
     #include "Instrucciones/print.hpp"
+    #include "Instrucciones/asignacion.hpp"
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
     #include "Instrucciones/declaracion.hpp"
 
 
-#line 70 "parser.hpp"
+#line 71 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -201,7 +202,7 @@
 #endif
 
 namespace yy {
-#line 205 "parser.hpp"
+#line 206 "parser.hpp"
 
 
 
@@ -406,6 +407,7 @@ namespace yy {
       // INSTRUCTION
       // PRINT
       // DECLARACION
+      // ASIGNACION
       char dummy2[sizeof (Instruction*)];
 
       // TIPOS
@@ -570,11 +572,12 @@ namespace yy {
         S_INSTRUCTION = 33,                      // INSTRUCTION
         S_PRINT = 34,                            // PRINT
         S_DECLARACION = 35,                      // DECLARACION
-        S_TIPOS_DECLARACION = 36,                // TIPOS_DECLARACION
-        S_EXPRESSION = 37,                       // EXPRESSION
-        S_PRIMITIVE = 38,                        // PRIMITIVE
-        S_BOOLEANO = 39,                         // BOOLEANO
-        S_TIPOS = 40                             // TIPOS
+        S_ASIGNACION = 36,                       // ASIGNACION
+        S_TIPOS_DECLARACION = 37,                // TIPOS_DECLARACION
+        S_EXPRESSION = 38,                       // EXPRESSION
+        S_PRIMITIVE = 39,                        // PRIMITIVE
+        S_BOOLEANO = 40,                         // BOOLEANO
+        S_TIPOS = 41                             // TIPOS
       };
     };
 
@@ -621,6 +624,7 @@ namespace yy {
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
+      case symbol_kind::S_ASIGNACION: // ASIGNACION
         value.move< Instruction* > (std::move (that.value));
         break;
 
@@ -805,6 +809,7 @@ switch (yykind)
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
+      case symbol_kind::S_ASIGNACION: // ASIGNACION
         value.template destroy< Instruction* > ();
         break;
 
@@ -1735,9 +1740,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 20,     ///< Last index in yytable_.
-      yynnts_ = 12,  ///< Number of nonterminal symbols.
-      yyfinal_ = 14 ///< Termination state number.
+      yylast_ = 22,     ///< Last index in yytable_.
+      yynnts_ = 13,  ///< Number of nonterminal symbols.
+      yyfinal_ = 17 ///< Termination state number.
     };
 
 
@@ -1818,6 +1823,7 @@ switch (yykind)
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
+      case symbol_kind::S_ASIGNACION: // ASIGNACION
         value.copy< Instruction* > (YY_MOVE (that.value));
         break;
 
@@ -1902,6 +1908,7 @@ switch (yykind)
       case symbol_kind::S_INSTRUCTION: // INSTRUCTION
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
+      case symbol_kind::S_ASIGNACION: // ASIGNACION
         value.move< Instruction* > (YY_MOVE (s.value));
         break;
 
@@ -2011,7 +2018,7 @@ switch (yykind)
 
 
 } // yy
-#line 2015 "parser.hpp"
+#line 2022 "parser.hpp"
 
 
 
