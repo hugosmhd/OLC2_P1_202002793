@@ -13,6 +13,8 @@ SOURCES += \
     Abstract/expression.cpp \
     Abstract/instruccion.cpp \
     Abstract/retorno.cpp \
+    Expresiones/aritmetica.cpp \
+    Expresiones/identificador.cpp \
     Expresiones/literal.cpp \
     Instrucciones/asignacion.cpp \
     Instrucciones/declaracion.cpp \
@@ -33,6 +35,8 @@ HEADERS += \
     Abstract/expression.hpp \
     Abstract/instruccion.hpp \
     Abstract/retorno.hpp \
+    Expresiones/aritmetica.hpp \
+    Expresiones/identificador.hpp \
     Expresiones/literal.hpp \
     Instrucciones/asignacion.hpp \
     Instrucciones/declaracion.hpp \
@@ -40,6 +44,7 @@ HEADERS += \
     Instrucciones/lista_instrucciones.hpp \
     Instrucciones/print.hpp \
     ParserCtx.hpp \
+    Symbols/ArithmeticOption.h \
     Symbols/environment.hpp \
     Symbols/symbol.hpp \
     Symbols/type.h \

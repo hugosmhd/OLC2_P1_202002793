@@ -55,8 +55,11 @@
 
     /*Expresiones*/
     #include "Expresiones/literal.hpp"
+    #include "Expresiones/identificador.hpp"
+    #include "Expresiones/aritmetica.hpp"
     #include "Abstract/expression.hpp"
     #include "Symbols/type.h"
+    #include "Symbols/ArithmeticOption.h"
 
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
@@ -65,9 +68,10 @@
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
     #include "Instrucciones/declaracion.hpp"
+    
 
 
-#line 71 "parser.hpp"
+#line 75 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -202,7 +206,7 @@
 #endif
 
 namespace yy {
-#line 206 "parser.hpp"
+#line 210 "parser.hpp"
 
 
 
@@ -1740,7 +1744,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 22,     ///< Last index in yytable_.
+      yylast_ = 37,     ///< Last index in yytable_.
       yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 17 ///< Termination state number.
     };
@@ -2018,7 +2022,7 @@ switch (yykind)
 
 
 } // yy
-#line 2022 "parser.hpp"
+#line 2026 "parser.hpp"
 
 
 

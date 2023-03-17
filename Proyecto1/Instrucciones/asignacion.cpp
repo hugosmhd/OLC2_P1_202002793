@@ -18,7 +18,7 @@ void Asignacion::ejecutar(Environment *env) {
         identificador.value = symb.value;
         env->actualizar_variable(identificador, id);
         identificador = env->get_variable(this->id);
-        std::cout << std::to_string(*static_cast<int*>(identificador.value)) << std::endl;
+        //std::cout << std::to_string(*static_cast<int*>(identificador.value)) << std::endl;
     }
 
 }

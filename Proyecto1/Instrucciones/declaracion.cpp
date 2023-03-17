@@ -11,22 +11,33 @@ Declaracion::Declaracion(int line, int column, Type type, std::string id, Expres
 
 void Declaracion::ejecutar(Environment *env) {
     Symbol symb = this->expression->ejecutar(env);
-    /*std::cout << "Hola declaracion!" << std::endl;
-    std::cout << type << std::endl;
-    std::cout << symb.type << std::endl;
-    std::cout << this->id << std::endl;*/
-    //std::cout << std::to_string(*static_cast<int*>(symb.value)) << std::endl;
     if(type == symb.type) {
-         //std::cout << "GUARDA VARIABLE" << std::endl;
         env->guardar_variable(symb, id);
     } else if(symb.type == NULO) {
+
         switch(type) {
             case INTEGER:
-                //std::cout << "Es INTEGER" << std::endl;
-                //Symbol new_symb = Symbol(symb.line, symb.column, symb.id, INTEGER, 0);
-                //std::cout << new_symb.type << std::endl;
                 symb.type = INTEGER;
-                symb.value = 0;
+                symb.value = &vacio_int;
+                std::cout << "Integer no inicializado" << std::endl;
+                std::cout << vacio_int << std::endl;
+                symb = Symbol(0,0,id,type,&vacio_int);
+                env->guardar_variable(symb, id);
+            break;
+            case STRING:
+                symb.type = STRING;
+                symb.value = &vacio_string;
+                //symb = Symbol(0,0,id,type,"");
+                env->guardar_variable(symb, id);
+            break;
+            case FLOAT:
+                symb.type = FLOAT;
+                symb.value = &vacio_float;
+                env->guardar_variable(symb, id);
+            break;
+            case BOOL:
+                symb.type = BOOL;
+                symb.value = &vacio_bool;
                 env->guardar_variable(symb, id);
             break;
         }

@@ -39,8 +39,11 @@
 
     /*Expresiones*/
     #include "Expresiones/literal.hpp"
+    #include "Expresiones/identificador.hpp"
+    #include "Expresiones/aritmetica.hpp"
     #include "Abstract/expression.hpp"
     #include "Symbols/type.h"
+    #include "Symbols/ArithmeticOption.h"
 
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
@@ -49,6 +52,7 @@
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
     #include "Instrucciones/declaracion.hpp"
+    
 
 }
 
@@ -137,8 +141,12 @@ TIPOS_DECLARACION: '=' EXPRESSION { $$ = $2; }
     |%empty { $$ = new Literal(0,0,NULO,"",0,false,0.0); }
 ;
 
-EXPRESSION:
-    PRIMITIVE { $$ = $1; }
+EXPRESSION: EXPRESSION SUMA EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MAS); }
+    | EXPRESSION MENOS EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,SUSTRACCION); }
+    | EXPRESSION POR EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,PRODUCTO); }
+    | EXPRESSION DIV EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,DIVISION); }
+    | PRIMITIVE { $$ = $1; }
+    | ID { $$ = new Identificador(0,0,$1); }
 ;
 
 PRIMITIVE : STRING
@@ -154,7 +162,7 @@ PRIMITIVE : STRING
     }
     | DECIMAL
     {
-        float num = stof($1);
+        float num = stod($1);
         $$ = new Literal(0,0,FLOAT,"",0,false, num);
     }
     | BOOLEANO { $$ = $1; }

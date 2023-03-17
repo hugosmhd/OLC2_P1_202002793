@@ -11,6 +11,9 @@ class Print : public Instruction
 public:
     int line, column;
     Expression *expression;
+
+    double valor;
+
     Print(int line, int col, Expression *expression);
     void ejecutar(Environment *env) override; //, ast *tree
 };

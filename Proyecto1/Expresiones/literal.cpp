@@ -1,6 +1,6 @@
 #include "literal.hpp"
 
-Literal::Literal(int _line, int _column, Type _type, std::string _strVal, int _numVal, bool _boolVal, float _floatVal)
+Literal::Literal(int _line, int _column, Type _type, std::string _strVal, int _numVal, bool _boolVal, double _floatVal)
 {
     this->line = _line;
     this->column = _column;
@@ -14,6 +14,8 @@ Literal::Literal(int _line, int _column, Type _type, std::string _strVal, int _n
 Symbol Literal::ejecutar(Environment *env)
 {
     Symbol ret(line, column, "", NULO, nullptr);
+    //std::cout << "Desde literal" << std::endl;
+    //std::cout << type << std::endl;
     switch (type) {
         case INTEGER:
             ret = Symbol(line, column, "", type, &numVal);
