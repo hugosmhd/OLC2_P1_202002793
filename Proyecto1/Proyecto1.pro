@@ -17,6 +17,7 @@ SOURCES += \
     Expresiones/identificador.cpp \
     Expresiones/incremento.cpp \
     Expresiones/literal.cpp \
+    Expresiones/negacionunaria.cpp \
     Instrucciones/asignacion.cpp \
     Instrucciones/declaracion.cpp \
     Instrucciones/funcion_main.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     Expresiones/identificador.hpp \
     Expresiones/incremento.hpp \
     Expresiones/literal.hpp \
+    Expresiones/negacionunaria.hpp \
     Instrucciones/asignacion.hpp \
     Instrucciones/declaracion.hpp \
     Instrucciones/funcion_main.hpp \

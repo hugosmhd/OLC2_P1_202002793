@@ -42,6 +42,7 @@
     #include "Expresiones/identificador.hpp"
     #include "Expresiones/aritmetica.hpp"
     #include "Expresiones/incremento.hpp"
+    #include "Expresiones/negacionunaria.hpp"
     #include "Abstract/expression.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
@@ -151,6 +152,7 @@ EXPRESSION: EXPRESSION SUMA EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MAS); }
     | EXPRESSION POR EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,PRODUCTO); }
     | EXPRESSION DIV EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,DIVISION); }
     | EXPRESSION MOD EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MODULO); }
+    | MENOS EXPRESSION { $$ = new NegacionUnaria(0,0,$2); }
     | PRIMITIVE { $$ = $1; }
     | ID { $$ = new Identificador(0,0,$1); }
     | INCREMENT { $$ = $1; }

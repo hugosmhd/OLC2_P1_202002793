@@ -58,6 +58,7 @@
     #include "Expresiones/identificador.hpp"
     #include "Expresiones/aritmetica.hpp"
     #include "Expresiones/incremento.hpp"
+    #include "Expresiones/negacionunaria.hpp"
     #include "Abstract/expression.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
@@ -73,7 +74,7 @@
     
 
 
-#line 77 "parser.hpp"
+#line 78 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -208,7 +209,7 @@
 #endif
 
 namespace yy {
-#line 212 "parser.hpp"
+#line 213 "parser.hpp"
 
 
 
@@ -1794,7 +1795,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 48,     ///< Last index in yytable_.
+      yylast_ = 51,     ///< Last index in yytable_.
       yynnts_ = 15,  ///< Number of nonterminal symbols.
       yyfinal_ = 21 ///< Termination state number.
     };
@@ -2080,7 +2081,7 @@ switch (yykind)
 
 
 } // yy
-#line 2084 "parser.hpp"
+#line 2085 "parser.hpp"
 
 
 
