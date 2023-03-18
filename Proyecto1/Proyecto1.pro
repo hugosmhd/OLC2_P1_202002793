@@ -15,10 +15,12 @@ SOURCES += \
     Abstract/retorno.cpp \
     Expresiones/aritmetica.cpp \
     Expresiones/identificador.cpp \
+    Expresiones/incremento.cpp \
     Expresiones/literal.cpp \
     Instrucciones/asignacion.cpp \
     Instrucciones/declaracion.cpp \
     Instrucciones/funcion_main.cpp \
+    Instrucciones/incrementoins.cpp \
     Instrucciones/lista_instrucciones.cpp \
     Instrucciones/print.cpp \
     ParserCtx.cpp \
@@ -37,10 +39,12 @@ HEADERS += \
     Abstract/retorno.hpp \
     Expresiones/aritmetica.hpp \
     Expresiones/identificador.hpp \
+    Expresiones/incremento.hpp \
     Expresiones/literal.hpp \
     Instrucciones/asignacion.hpp \
     Instrucciones/declaracion.hpp \
     Instrucciones/funcion_main.hpp \
+    Instrucciones/incrementoins.hpp \
     Instrucciones/lista_instrucciones.hpp \
     Instrucciones/print.hpp \
     ParserCtx.hpp \

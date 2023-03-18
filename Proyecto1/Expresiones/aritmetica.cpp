@@ -185,8 +185,26 @@ Symbol Aritmetica::ejecutar(Environment *env) {
                 valor_int = *static_cast<bool*>(nodo_der.value) / *static_cast<bool*>(nodo_izq.value);
                 result = Symbol(line, column, "", INTEGER, &valor_int);
             }
-
-
+        }
+    } else if(this->type == MODULO) {
+        if(nodo_izq.type == INTEGER && nodo_der.type == INTEGER) {
+            valor_int = *static_cast<int*>(nodo_der.value) % *static_cast<int*>(nodo_izq.value);
+            result = Symbol(line, column, "", INTEGER, &valor_int);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == BOOL) {
+            valor_int = *static_cast<bool*>(nodo_der.value) % *static_cast<int*>(nodo_izq.value);
+            result = Symbol(line, column, "", INTEGER, &valor_int);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == INTEGER) {
+            int val_bool = *static_cast<bool*>(nodo_izq.value);
+            if(val_bool != 0) {
+                valor_int = *static_cast<int*>(nodo_der.value) % *static_cast<bool*>(nodo_izq.value);
+                result = Symbol(line, column, "", INTEGER, &valor_int);
+            }
+        } else if(nodo_izq.type == BOOL && nodo_der.type == BOOL) {
+            int val_bool = *static_cast<bool*>(nodo_izq.value);
+            if(val_bool != 0) {
+                valor_int = *static_cast<bool*>(nodo_der.value) % *static_cast<bool*>(nodo_izq.value);
+                result = Symbol(line, column, "", INTEGER, &valor_int);
+            }
         }
     }
 

@@ -29,7 +29,7 @@ Symbol Environment::get_variable(std::string id) //, ast *tree
     {
         Symbol tempSym (tabla_simbolos[id].line,
                         tabla_simbolos[id].column,
-                        tabla_simbolos[id].id,
+                        id,
                         tabla_simbolos[id].type,
                         tabla_simbolos[id].value);
         sym = tempSym;

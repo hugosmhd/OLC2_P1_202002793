@@ -49,10 +49,12 @@ DECIMAL {NUMERO}"."{NUMERO}
 
 [ \t\v\r\n\f]             ; /* caracteres en blanco */
 
+"++"     return Parser::symbol_type( token::INC, loc );
 "+"     return Parser::symbol_type( token::SUMA, loc );
 "-"     return Parser::symbol_type( token::MENOS, loc );
 "*"     return Parser::symbol_type( token::POR, loc );
 "/"     return Parser::symbol_type( token::DIV, loc );
+"%"     return Parser::symbol_type( token::MOD, loc );
 
 ";"     return Parser::symbol_type( token_type(';'), loc );
 "="     return Parser::symbol_type( token_type('='), loc );

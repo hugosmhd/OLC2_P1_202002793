@@ -57,6 +57,7 @@
     #include "Expresiones/literal.hpp"
     #include "Expresiones/identificador.hpp"
     #include "Expresiones/aritmetica.hpp"
+    #include "Expresiones/incremento.hpp"
     #include "Abstract/expression.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
@@ -68,10 +69,11 @@
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
     #include "Instrucciones/declaracion.hpp"
+    #include "Instrucciones/incrementoins.hpp"
     
 
 
-#line 75 "parser.hpp"
+#line 77 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -206,7 +208,7 @@
 #endif
 
 namespace yy {
-#line 210 "parser.hpp"
+#line 212 "parser.hpp"
 
 
 
@@ -404,6 +406,7 @@ namespace yy {
     {
       // TIPOS_DECLARACION
       // EXPRESSION
+      // INCREMENT
       // PRIMITIVE
       // BOOLEANO
       char dummy1[sizeof (Expression*)];
@@ -412,6 +415,7 @@ namespace yy {
       // PRINT
       // DECLARACION
       // ASIGNACION
+      // INCREMENTINS
       char dummy2[sizeof (Instruction*)];
 
       // TIPOS
@@ -428,10 +432,12 @@ namespace yy {
       // ID
       // STRING
       // DECIMAL
+      // INC
       // SUMA
       // MENOS
       // POR
       // DIV
+      // MOD
       // PRINTF
       // VOID
       // INT
@@ -502,26 +508,28 @@ namespace yy {
     ID = 259,                      // ID
     STRING = 260,                  // STRING
     DECIMAL = 261,                 // DECIMAL
-    SUMA = 262,                    // SUMA
-    MENOS = 263,                   // MENOS
-    POR = 264,                     // POR
-    DIV = 265,                     // DIV
-    PRINTF = 266,                  // PRINTF
-    VOID = 267,                    // VOID
-    INT = 268,                     // INT
-    TSTRING = 269,                 // TSTRING
-    FLOTANTE = 270,                // FLOTANTE
-    BOOLEAN = 271,                 // BOOLEAN
-    PARA = 272,                    // PARA
-    PARC = 273,                    // PARC
-    RMAIN = 274,                   // RMAIN
-    LLAVA = 275,                   // LLAVA
-    LLAVC = 276,                   // LLAVC
-    RTRUE = 277,                   // RTRUE
-    RFALSE = 278,                  // RFALSE
-    CORA = 279,                    // CORA
-    CORC = 280,                    // CORC
-    COMA = 281                     // COMA
+    INC = 262,                     // INC
+    SUMA = 263,                    // SUMA
+    MENOS = 264,                   // MENOS
+    POR = 265,                     // POR
+    DIV = 266,                     // DIV
+    MOD = 267,                     // MOD
+    PRINTF = 268,                  // PRINTF
+    VOID = 269,                    // VOID
+    INT = 270,                     // INT
+    TSTRING = 271,                 // TSTRING
+    FLOTANTE = 272,                // FLOTANTE
+    BOOLEAN = 273,                 // BOOLEAN
+    PARA = 274,                    // PARA
+    PARC = 275,                    // PARC
+    RMAIN = 276,                   // RMAIN
+    LLAVA = 277,                   // LLAVA
+    LLAVC = 278,                   // LLAVC
+    RTRUE = 279,                   // RTRUE
+    RFALSE = 280,                  // RFALSE
+    CORA = 281,                    // CORA
+    CORC = 282,                    // CORC
+    COMA = 283                     // COMA
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -538,7 +546,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 29, ///< Number of tokens.
+        YYNTOKENS = 31, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // END
         S_YYerror = 1,                           // error
@@ -547,41 +555,45 @@ namespace yy {
         S_ID = 4,                                // ID
         S_STRING = 5,                            // STRING
         S_DECIMAL = 6,                           // DECIMAL
-        S_SUMA = 7,                              // SUMA
-        S_MENOS = 8,                             // MENOS
-        S_POR = 9,                               // POR
-        S_DIV = 10,                              // DIV
-        S_PRINTF = 11,                           // PRINTF
-        S_VOID = 12,                             // VOID
-        S_INT = 13,                              // INT
-        S_TSTRING = 14,                          // TSTRING
-        S_FLOTANTE = 15,                         // FLOTANTE
-        S_BOOLEAN = 16,                          // BOOLEAN
-        S_PARA = 17,                             // PARA
-        S_PARC = 18,                             // PARC
-        S_RMAIN = 19,                            // RMAIN
-        S_LLAVA = 20,                            // LLAVA
-        S_LLAVC = 21,                            // LLAVC
-        S_RTRUE = 22,                            // RTRUE
-        S_RFALSE = 23,                           // RFALSE
-        S_CORA = 24,                             // CORA
-        S_CORC = 25,                             // CORC
-        S_COMA = 26,                             // COMA
-        S_27_ = 27,                              // ';'
-        S_28_ = 28,                              // '='
-        S_YYACCEPT = 29,                         // $accept
-        S_START = 30,                            // START
-        S_MAIN = 31,                             // MAIN
-        S_LIST_INST = 32,                        // LIST_INST
-        S_INSTRUCTION = 33,                      // INSTRUCTION
-        S_PRINT = 34,                            // PRINT
-        S_DECLARACION = 35,                      // DECLARACION
-        S_ASIGNACION = 36,                       // ASIGNACION
-        S_TIPOS_DECLARACION = 37,                // TIPOS_DECLARACION
-        S_EXPRESSION = 38,                       // EXPRESSION
-        S_PRIMITIVE = 39,                        // PRIMITIVE
-        S_BOOLEANO = 40,                         // BOOLEANO
-        S_TIPOS = 41                             // TIPOS
+        S_INC = 7,                               // INC
+        S_SUMA = 8,                              // SUMA
+        S_MENOS = 9,                             // MENOS
+        S_POR = 10,                              // POR
+        S_DIV = 11,                              // DIV
+        S_MOD = 12,                              // MOD
+        S_PRINTF = 13,                           // PRINTF
+        S_VOID = 14,                             // VOID
+        S_INT = 15,                              // INT
+        S_TSTRING = 16,                          // TSTRING
+        S_FLOTANTE = 17,                         // FLOTANTE
+        S_BOOLEAN = 18,                          // BOOLEAN
+        S_PARA = 19,                             // PARA
+        S_PARC = 20,                             // PARC
+        S_RMAIN = 21,                            // RMAIN
+        S_LLAVA = 22,                            // LLAVA
+        S_LLAVC = 23,                            // LLAVC
+        S_RTRUE = 24,                            // RTRUE
+        S_RFALSE = 25,                           // RFALSE
+        S_CORA = 26,                             // CORA
+        S_CORC = 27,                             // CORC
+        S_COMA = 28,                             // COMA
+        S_29_ = 29,                              // ';'
+        S_30_ = 30,                              // '='
+        S_YYACCEPT = 31,                         // $accept
+        S_START = 32,                            // START
+        S_MAIN = 33,                             // MAIN
+        S_LIST_INST = 34,                        // LIST_INST
+        S_INSTRUCTION = 35,                      // INSTRUCTION
+        S_PRINT = 36,                            // PRINT
+        S_DECLARACION = 37,                      // DECLARACION
+        S_ASIGNACION = 38,                       // ASIGNACION
+        S_TIPOS_DECLARACION = 39,                // TIPOS_DECLARACION
+        S_EXPRESSION = 40,                       // EXPRESSION
+        S_INCREMENTINS = 41,                     // INCREMENTINS
+        S_INCREMENT = 42,                        // INCREMENT
+        S_PRIMITIVE = 43,                        // PRIMITIVE
+        S_BOOLEANO = 44,                         // BOOLEANO
+        S_TIPOS = 45                             // TIPOS
       };
     };
 
@@ -620,6 +632,7 @@ namespace yy {
     {
       case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
+      case symbol_kind::S_INCREMENT: // INCREMENT
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
       case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.move< Expression* > (std::move (that.value));
@@ -629,6 +642,7 @@ namespace yy {
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
       case symbol_kind::S_ASIGNACION: // ASIGNACION
+      case symbol_kind::S_INCREMENTINS: // INCREMENTINS
         value.move< Instruction* > (std::move (that.value));
         break;
 
@@ -649,10 +663,12 @@ namespace yy {
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_DECIMAL: // DECIMAL
+      case symbol_kind::S_INC: // INC
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
       case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
@@ -805,6 +821,7 @@ switch (yykind)
     {
       case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
+      case symbol_kind::S_INCREMENT: // INCREMENT
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
       case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.template destroy< Expression* > ();
@@ -814,6 +831,7 @@ switch (yykind)
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
       case symbol_kind::S_ASIGNACION: // ASIGNACION
+      case symbol_kind::S_INCREMENTINS: // INCREMENTINS
         value.template destroy< Instruction* > ();
         break;
 
@@ -834,10 +852,12 @@ switch (yykind)
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_DECIMAL: // DECIMAL
+      case symbol_kind::S_INC: // INC
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
       case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
@@ -1117,6 +1137,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_INC (std::string v, location_type l)
+      {
+        return symbol_type (token::INC, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_INC (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::INC, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_SUMA (std::string v, location_type l)
       {
         return symbol_type (token::SUMA, std::move (v), std::move (l));
@@ -1172,6 +1207,21 @@ switch (yykind)
       make_DIV (const std::string& v, const location_type& l)
       {
         return symbol_type (token::DIV, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MOD (std::string v, location_type l)
+      {
+        return symbol_type (token::MOD, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_MOD (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::MOD, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1744,9 +1794,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 37,     ///< Last index in yytable_.
-      yynnts_ = 13,  ///< Number of nonterminal symbols.
-      yyfinal_ = 17 ///< Termination state number.
+      yylast_ = 48,     ///< Last index in yytable_.
+      yynnts_ = 15,  ///< Number of nonterminal symbols.
+      yyfinal_ = 21 ///< Termination state number.
     };
 
 
@@ -1772,8 +1822,8 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    27,
-       2,    28,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    29,
+       2,    30,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1795,10 +1845,10 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26
+      25,    26,    27,    28
     };
     // Last valid token kind.
-    const int code_max = 281;
+    const int code_max = 283;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1819,6 +1869,7 @@ switch (yykind)
     {
       case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
+      case symbol_kind::S_INCREMENT: // INCREMENT
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
       case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.copy< Expression* > (YY_MOVE (that.value));
@@ -1828,6 +1879,7 @@ switch (yykind)
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
       case symbol_kind::S_ASIGNACION: // ASIGNACION
+      case symbol_kind::S_INCREMENTINS: // INCREMENTINS
         value.copy< Instruction* > (YY_MOVE (that.value));
         break;
 
@@ -1848,10 +1900,12 @@ switch (yykind)
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_DECIMAL: // DECIMAL
+      case symbol_kind::S_INC: // INC
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
       case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
@@ -1904,6 +1958,7 @@ switch (yykind)
     {
       case symbol_kind::S_TIPOS_DECLARACION: // TIPOS_DECLARACION
       case symbol_kind::S_EXPRESSION: // EXPRESSION
+      case symbol_kind::S_INCREMENT: // INCREMENT
       case symbol_kind::S_PRIMITIVE: // PRIMITIVE
       case symbol_kind::S_BOOLEANO: // BOOLEANO
         value.move< Expression* > (YY_MOVE (s.value));
@@ -1913,6 +1968,7 @@ switch (yykind)
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_DECLARACION: // DECLARACION
       case symbol_kind::S_ASIGNACION: // ASIGNACION
+      case symbol_kind::S_INCREMENTINS: // INCREMENTINS
         value.move< Instruction* > (YY_MOVE (s.value));
         break;
 
@@ -1933,10 +1989,12 @@ switch (yykind)
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_DECIMAL: // DECIMAL
+      case symbol_kind::S_INC: // INC
       case symbol_kind::S_SUMA: // SUMA
       case symbol_kind::S_MENOS: // MENOS
       case symbol_kind::S_POR: // POR
       case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
@@ -2022,7 +2080,7 @@ switch (yykind)
 
 
 } // yy
-#line 2026 "parser.hpp"
+#line 2084 "parser.hpp"
 
 
 

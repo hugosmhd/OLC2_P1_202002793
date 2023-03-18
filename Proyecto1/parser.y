@@ -41,6 +41,7 @@
     #include "Expresiones/literal.hpp"
     #include "Expresiones/identificador.hpp"
     #include "Expresiones/aritmetica.hpp"
+    #include "Expresiones/incremento.hpp"
     #include "Abstract/expression.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
@@ -52,6 +53,7 @@
     #include "Instrucciones/funcion_main.hpp"
     #include "Instrucciones/lista_instrucciones.hpp"
     #include "Instrucciones/declaracion.hpp"
+    #include "Instrucciones/incrementoins.hpp"
     
 
 }
@@ -63,12 +65,12 @@
 %token END 0;
 
 /*tokens*/
-%token <std::string> NUMERO ID STRING DECIMAL SUMA MENOS POR DIV PRINTF
+%token <std::string> NUMERO ID STRING DECIMAL INC SUMA MENOS POR DIV MOD PRINTF
 %token <std::string> VOID INT TSTRING FLOTANTE BOOLEAN PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
 
 /* precedencia de operadores */
 %left SUMA MENOS
-%left POR DIV
+%left POR DIV MOD
 
 /* instancia de la clase que creamos */
 %lex-param {void *scanner} {yy::location& loc} { class Proyecto1::ParserCtx & ctx }
@@ -80,7 +82,9 @@
 %type<Instruction*> PRINT;
 %type<Instruction*> DECLARACION;
 %type<Instruction*> ASIGNACION;
+%type<Instruction*> INCREMENTINS;
 %type<Expression*> PRIMITIVE;
+%type<Expression*> INCREMENT;
 %type<Expression*> BOOLEANO;
 %type<Expression*> TIPOS_DECLARACION;
 %type<lista_instrucciones*> LIST_INST;
@@ -125,6 +129,7 @@ LIST_INST : LIST_INST INSTRUCTION
 INSTRUCTION : PRINT ';' { $$ = $1; }
     | DECLARACION ';' { $$ = $1; }
     | ASIGNACION ';' { $$ = $1; }
+    | INCREMENTINS ';' { $$ = $1; }
 ;
 
 PRINT : PRINTF PARA EXPRESSION PARC { $$ = new Print(0,0,$3); }
@@ -145,8 +150,20 @@ EXPRESSION: EXPRESSION SUMA EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MAS); }
     | EXPRESSION MENOS EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,SUSTRACCION); }
     | EXPRESSION POR EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,PRODUCTO); }
     | EXPRESSION DIV EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,DIVISION); }
+    | EXPRESSION MOD EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MODULO); }
     | PRIMITIVE { $$ = $1; }
     | ID { $$ = new Identificador(0,0,$1); }
+    | INCREMENT { $$ = $1; }
+;
+
+INCREMENTINS
+    : INC ID      {$$ = new IncrementoIns(0,0,"PRE",$2); }             
+    | ID INC      {$$ = new IncrementoIns(0,0,"POST",$1); }             
+;
+
+INCREMENT
+    : INC ID      {$$ = new Incremento(0,0,"PRE",$2); }             
+    | ID INC      {$$ = new Incremento(0,0,"POST",$1); }             
 ;
 
 PRIMITIVE : STRING
