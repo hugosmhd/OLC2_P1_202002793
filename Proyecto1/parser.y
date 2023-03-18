@@ -45,9 +45,12 @@
     #include "Expresiones/incremento.hpp"
     #include "Expresiones/negacionunaria.hpp"
     #include "Expresiones/relacional.hpp"
+    #include "Expresiones/logica.hpp"
+    #include "Expresiones/logicanot.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
     #include "Symbols/RelacionalOption.h"
+    #include "Symbols/LogicalOption.h"
 
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
@@ -70,12 +73,16 @@
 /*tokens*/
 %token <std::string> NUMERO ID STRING DECIMAL INC SUMA MENOS POR DIV MOD PRINTF
 %token <std::string> IGUALIGUALR DIFERENTER MAYORQUER MENORQUER MAYORIGUALQUER MENORIGUALQUER
+%token <std::string> OPAND OPOR OPNOT
 %token <std::string> VOID INT TSTRING FLOTANTE BOOLEAN PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
 
 /* precedencia de operadores */
+%left OPOR
+%left OPAND
 %left MAYORQUER MENORQUER MAYORIGUALQUER MENORIGUALQUER IGUALIGUALR DIFERENTER
 %left SUMA MENOS
 %left POR DIV MOD
+%left OPNOT
 
 /* instancia de la clase que creamos */
 %lex-param {void *scanner} {yy::location& loc} { class Proyecto1::ParserCtx & ctx }
@@ -162,6 +169,9 @@ EXPRESSION: EXPRESSION SUMA EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MAS); }
     | EXPRESSION MENORQUER EXPRESSION { $$ = new Relacional(0,0,$1,$3,MENOR); }
     | EXPRESSION MAYORIGUALQUER EXPRESSION { $$ = new Relacional(0,0,$1,$3,MAYORIGUAL); }
     | EXPRESSION MENORIGUALQUER EXPRESSION { $$ = new Relacional(0,0,$1,$3,MENORIGUAL); }
+    | EXPRESSION OPAND EXPRESSION { $$ = new Logica(0,0,$1,$3,AND); }
+    | EXPRESSION OPOR EXPRESSION { $$ = new Logica(0,0,$1,$3,OR); }
+    | OPNOT EXPRESSION { $$ = new LogicaNot(0,0,$2,NOT); }
     | MENOS EXPRESSION { $$ = new NegacionUnaria(0,0,$2); }
     | PRIMITIVE { $$ = $1; }
     | ID { $$ = new Identificador(0,0,$1); }

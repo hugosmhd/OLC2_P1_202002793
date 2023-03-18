@@ -18,6 +18,7 @@ SOURCES += \
     Expresiones/incremento.cpp \
     Expresiones/literal.cpp \
     Expresiones/logica.cpp \
+    Expresiones/logicanot.cpp \
     Expresiones/negacionunaria.cpp \
     Expresiones/relacional.cpp \
     Instrucciones/asignacion.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     Expresiones/incremento.hpp \
     Expresiones/literal.hpp \
     Expresiones/logica.hpp \
+    Expresiones/logicanot.hpp \
     Expresiones/negacionunaria.hpp \
     Expresiones/relacional.hpp \
     Instrucciones/asignacion.hpp \

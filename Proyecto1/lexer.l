@@ -49,12 +49,15 @@ DECIMAL {NUMERO}"."{NUMERO}
 
 [ \t\v\r\n\f]             ; /* caracteres en blanco */
 
+"||"     return Parser::symbol_type( token::OPOR, loc );
+"&&"     return Parser::symbol_type( token::OPAND, loc );
 ">="     return Parser::symbol_type( token::MAYORIGUALQUER, loc );
 ">"     return Parser::symbol_type( token::MAYORQUER, loc );
 "<="     return Parser::symbol_type( token::MENORIGUALQUER, loc );
 "<"     return Parser::symbol_type( token::MENORQUER, loc );
 "=="     return Parser::symbol_type( token::IGUALIGUALR, loc );
 "!="     return Parser::symbol_type( token::DIFERENTER, loc );
+"!"     return Parser::symbol_type( token::OPNOT, loc );
 "++"     return Parser::symbol_type( token::INC, loc );
 "+"     return Parser::symbol_type( token::SUMA, loc );
 "-"     return Parser::symbol_type( token::MENOS, loc );

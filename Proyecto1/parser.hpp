@@ -61,9 +61,12 @@
     #include "Expresiones/incremento.hpp"
     #include "Expresiones/negacionunaria.hpp"
     #include "Expresiones/relacional.hpp"
+    #include "Expresiones/logica.hpp"
+    #include "Expresiones/logicanot.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
     #include "Symbols/RelacionalOption.h"
+    #include "Symbols/LogicalOption.h"
 
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
@@ -76,7 +79,7 @@
     
 
 
-#line 80 "parser.hpp"
+#line 83 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -211,7 +214,7 @@
 #endif
 
 namespace yy {
-#line 215 "parser.hpp"
+#line 218 "parser.hpp"
 
 
 
@@ -448,6 +451,9 @@ namespace yy {
       // MENORQUER
       // MAYORIGUALQUER
       // MENORIGUALQUER
+      // OPAND
+      // OPOR
+      // OPNOT
       // VOID
       // INT
       // TSTRING
@@ -530,21 +536,24 @@ namespace yy {
     MENORQUER = 272,               // MENORQUER
     MAYORIGUALQUER = 273,          // MAYORIGUALQUER
     MENORIGUALQUER = 274,          // MENORIGUALQUER
-    VOID = 275,                    // VOID
-    INT = 276,                     // INT
-    TSTRING = 277,                 // TSTRING
-    FLOTANTE = 278,                // FLOTANTE
-    BOOLEAN = 279,                 // BOOLEAN
-    PARA = 280,                    // PARA
-    PARC = 281,                    // PARC
-    RMAIN = 282,                   // RMAIN
-    LLAVA = 283,                   // LLAVA
-    LLAVC = 284,                   // LLAVC
-    RTRUE = 285,                   // RTRUE
-    RFALSE = 286,                  // RFALSE
-    CORA = 287,                    // CORA
-    CORC = 288,                    // CORC
-    COMA = 289                     // COMA
+    OPAND = 275,                   // OPAND
+    OPOR = 276,                    // OPOR
+    OPNOT = 277,                   // OPNOT
+    VOID = 278,                    // VOID
+    INT = 279,                     // INT
+    TSTRING = 280,                 // TSTRING
+    FLOTANTE = 281,                // FLOTANTE
+    BOOLEAN = 282,                 // BOOLEAN
+    PARA = 283,                    // PARA
+    PARC = 284,                    // PARC
+    RMAIN = 285,                   // RMAIN
+    LLAVA = 286,                   // LLAVA
+    LLAVC = 287,                   // LLAVC
+    RTRUE = 288,                   // RTRUE
+    RFALSE = 289,                  // RFALSE
+    CORA = 290,                    // CORA
+    CORC = 291,                    // CORC
+    COMA = 292                     // COMA
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -561,7 +570,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 37, ///< Number of tokens.
+        YYNTOKENS = 40, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // END
         S_YYerror = 1,                           // error
@@ -583,38 +592,41 @@ namespace yy {
         S_MENORQUER = 17,                        // MENORQUER
         S_MAYORIGUALQUER = 18,                   // MAYORIGUALQUER
         S_MENORIGUALQUER = 19,                   // MENORIGUALQUER
-        S_VOID = 20,                             // VOID
-        S_INT = 21,                              // INT
-        S_TSTRING = 22,                          // TSTRING
-        S_FLOTANTE = 23,                         // FLOTANTE
-        S_BOOLEAN = 24,                          // BOOLEAN
-        S_PARA = 25,                             // PARA
-        S_PARC = 26,                             // PARC
-        S_RMAIN = 27,                            // RMAIN
-        S_LLAVA = 28,                            // LLAVA
-        S_LLAVC = 29,                            // LLAVC
-        S_RTRUE = 30,                            // RTRUE
-        S_RFALSE = 31,                           // RFALSE
-        S_CORA = 32,                             // CORA
-        S_CORC = 33,                             // CORC
-        S_COMA = 34,                             // COMA
-        S_35_ = 35,                              // ';'
-        S_36_ = 36,                              // '='
-        S_YYACCEPT = 37,                         // $accept
-        S_START = 38,                            // START
-        S_MAIN = 39,                             // MAIN
-        S_LIST_INST = 40,                        // LIST_INST
-        S_INSTRUCTION = 41,                      // INSTRUCTION
-        S_PRINT = 42,                            // PRINT
-        S_DECLARACION = 43,                      // DECLARACION
-        S_ASIGNACION = 44,                       // ASIGNACION
-        S_TIPOS_DECLARACION = 45,                // TIPOS_DECLARACION
-        S_EXPRESSION = 46,                       // EXPRESSION
-        S_INCREMENTINS = 47,                     // INCREMENTINS
-        S_INCREMENT = 48,                        // INCREMENT
-        S_PRIMITIVE = 49,                        // PRIMITIVE
-        S_BOOLEANO = 50,                         // BOOLEANO
-        S_TIPOS = 51                             // TIPOS
+        S_OPAND = 20,                            // OPAND
+        S_OPOR = 21,                             // OPOR
+        S_OPNOT = 22,                            // OPNOT
+        S_VOID = 23,                             // VOID
+        S_INT = 24,                              // INT
+        S_TSTRING = 25,                          // TSTRING
+        S_FLOTANTE = 26,                         // FLOTANTE
+        S_BOOLEAN = 27,                          // BOOLEAN
+        S_PARA = 28,                             // PARA
+        S_PARC = 29,                             // PARC
+        S_RMAIN = 30,                            // RMAIN
+        S_LLAVA = 31,                            // LLAVA
+        S_LLAVC = 32,                            // LLAVC
+        S_RTRUE = 33,                            // RTRUE
+        S_RFALSE = 34,                           // RFALSE
+        S_CORA = 35,                             // CORA
+        S_CORC = 36,                             // CORC
+        S_COMA = 37,                             // COMA
+        S_38_ = 38,                              // ';'
+        S_39_ = 39,                              // '='
+        S_YYACCEPT = 40,                         // $accept
+        S_START = 41,                            // START
+        S_MAIN = 42,                             // MAIN
+        S_LIST_INST = 43,                        // LIST_INST
+        S_INSTRUCTION = 44,                      // INSTRUCTION
+        S_PRINT = 45,                            // PRINT
+        S_DECLARACION = 46,                      // DECLARACION
+        S_ASIGNACION = 47,                       // ASIGNACION
+        S_TIPOS_DECLARACION = 48,                // TIPOS_DECLARACION
+        S_EXPRESSION = 49,                       // EXPRESSION
+        S_INCREMENTINS = 50,                     // INCREMENTINS
+        S_INCREMENT = 51,                        // INCREMENT
+        S_PRIMITIVE = 52,                        // PRIMITIVE
+        S_BOOLEANO = 53,                         // BOOLEANO
+        S_TIPOS = 54                             // TIPOS
       };
     };
 
@@ -697,6 +709,9 @@ namespace yy {
       case symbol_kind::S_MENORQUER: // MENORQUER
       case symbol_kind::S_MAYORIGUALQUER: // MAYORIGUALQUER
       case symbol_kind::S_MENORIGUALQUER: // MENORIGUALQUER
+      case symbol_kind::S_OPAND: // OPAND
+      case symbol_kind::S_OPOR: // OPOR
+      case symbol_kind::S_OPNOT: // OPNOT
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -892,6 +907,9 @@ switch (yykind)
       case symbol_kind::S_MENORQUER: // MENORQUER
       case symbol_kind::S_MAYORIGUALQUER: // MAYORIGUALQUER
       case symbol_kind::S_MENORIGUALQUER: // MENORIGUALQUER
+      case symbol_kind::S_OPAND: // OPAND
+      case symbol_kind::S_OPOR: // OPOR
+      case symbol_kind::S_OPNOT: // OPNOT
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -1360,6 +1378,51 @@ switch (yykind)
       make_MENORIGUALQUER (const std::string& v, const location_type& l)
       {
         return symbol_type (token::MENORIGUALQUER, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_OPAND (std::string v, location_type l)
+      {
+        return symbol_type (token::OPAND, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_OPAND (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::OPAND, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_OPOR (std::string v, location_type l)
+      {
+        return symbol_type (token::OPOR, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_OPOR (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::OPOR, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_OPNOT (std::string v, location_type l)
+      {
+        return symbol_type (token::OPNOT, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_OPNOT (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::OPNOT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1917,7 +1980,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 85,     ///< Last index in yytable_.
+      yylast_ = 116,     ///< Last index in yytable_.
       yynnts_ = 15,  ///< Number of nonterminal symbols.
       yyfinal_ = 21 ///< Termination state number.
     };
@@ -1945,8 +2008,8 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    35,
-       2,    36,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    38,
+       2,    39,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1968,10 +2031,11 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31,    32,    33,    34
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37
     };
     // Last valid token kind.
-    const int code_max = 289;
+    const int code_max = 292;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2036,6 +2100,9 @@ switch (yykind)
       case symbol_kind::S_MENORQUER: // MENORQUER
       case symbol_kind::S_MAYORIGUALQUER: // MAYORIGUALQUER
       case symbol_kind::S_MENORIGUALQUER: // MENORIGUALQUER
+      case symbol_kind::S_OPAND: // OPAND
+      case symbol_kind::S_OPOR: // OPOR
+      case symbol_kind::S_OPNOT: // OPNOT
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -2131,6 +2198,9 @@ switch (yykind)
       case symbol_kind::S_MENORQUER: // MENORQUER
       case symbol_kind::S_MAYORIGUALQUER: // MAYORIGUALQUER
       case symbol_kind::S_MENORIGUALQUER: // MENORIGUALQUER
+      case symbol_kind::S_OPAND: // OPAND
+      case symbol_kind::S_OPOR: // OPOR
+      case symbol_kind::S_OPNOT: // OPNOT
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -2215,7 +2285,7 @@ switch (yykind)
 
 
 } // yy
-#line 2219 "parser.hpp"
+#line 2289 "parser.hpp"
 
 
 

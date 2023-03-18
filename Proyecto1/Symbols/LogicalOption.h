@@ -1,6 +1,8 @@
 #ifndef LOGICALOPTION_H
 #define LOGICALOPTION_H
 
-enum LogicalOption { MAS, SUSTRACCION, PRODUCTO, DIVISION, MODULO };
+enum LogicalOption { OR,
+                     AND,
+                     NOT };
 
 #endif // LOGICALOPTION_H
