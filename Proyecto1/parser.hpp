@@ -54,14 +54,16 @@
     #include "parserctx.hpp"
 
     /*Expresiones*/
+    #include "Abstract/expression.hpp"
     #include "Expresiones/literal.hpp"
     #include "Expresiones/identificador.hpp"
     #include "Expresiones/aritmetica.hpp"
     #include "Expresiones/incremento.hpp"
     #include "Expresiones/negacionunaria.hpp"
-    #include "Abstract/expression.hpp"
+    #include "Expresiones/relacional.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
+    #include "Symbols/RelacionalOption.h"
 
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
@@ -74,7 +76,7 @@
     
 
 
-#line 78 "parser.hpp"
+#line 80 "parser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -209,7 +211,7 @@
 #endif
 
 namespace yy {
-#line 213 "parser.hpp"
+#line 215 "parser.hpp"
 
 
 
@@ -440,6 +442,8 @@ namespace yy {
       // DIV
       // MOD
       // PRINTF
+      // IGUALIGUALR
+      // DIFERENTER
       // VOID
       // INT
       // TSTRING
@@ -516,21 +520,23 @@ namespace yy {
     DIV = 266,                     // DIV
     MOD = 267,                     // MOD
     PRINTF = 268,                  // PRINTF
-    VOID = 269,                    // VOID
-    INT = 270,                     // INT
-    TSTRING = 271,                 // TSTRING
-    FLOTANTE = 272,                // FLOTANTE
-    BOOLEAN = 273,                 // BOOLEAN
-    PARA = 274,                    // PARA
-    PARC = 275,                    // PARC
-    RMAIN = 276,                   // RMAIN
-    LLAVA = 277,                   // LLAVA
-    LLAVC = 278,                   // LLAVC
-    RTRUE = 279,                   // RTRUE
-    RFALSE = 280,                  // RFALSE
-    CORA = 281,                    // CORA
-    CORC = 282,                    // CORC
-    COMA = 283                     // COMA
+    IGUALIGUALR = 269,             // IGUALIGUALR
+    DIFERENTER = 270,              // DIFERENTER
+    VOID = 271,                    // VOID
+    INT = 272,                     // INT
+    TSTRING = 273,                 // TSTRING
+    FLOTANTE = 274,                // FLOTANTE
+    BOOLEAN = 275,                 // BOOLEAN
+    PARA = 276,                    // PARA
+    PARC = 277,                    // PARC
+    RMAIN = 278,                   // RMAIN
+    LLAVA = 279,                   // LLAVA
+    LLAVC = 280,                   // LLAVC
+    RTRUE = 281,                   // RTRUE
+    RFALSE = 282,                  // RFALSE
+    CORA = 283,                    // CORA
+    CORC = 284,                    // CORC
+    COMA = 285                     // COMA
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -547,7 +553,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 31, ///< Number of tokens.
+        YYNTOKENS = 33, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // END
         S_YYerror = 1,                           // error
@@ -563,38 +569,40 @@ namespace yy {
         S_DIV = 11,                              // DIV
         S_MOD = 12,                              // MOD
         S_PRINTF = 13,                           // PRINTF
-        S_VOID = 14,                             // VOID
-        S_INT = 15,                              // INT
-        S_TSTRING = 16,                          // TSTRING
-        S_FLOTANTE = 17,                         // FLOTANTE
-        S_BOOLEAN = 18,                          // BOOLEAN
-        S_PARA = 19,                             // PARA
-        S_PARC = 20,                             // PARC
-        S_RMAIN = 21,                            // RMAIN
-        S_LLAVA = 22,                            // LLAVA
-        S_LLAVC = 23,                            // LLAVC
-        S_RTRUE = 24,                            // RTRUE
-        S_RFALSE = 25,                           // RFALSE
-        S_CORA = 26,                             // CORA
-        S_CORC = 27,                             // CORC
-        S_COMA = 28,                             // COMA
-        S_29_ = 29,                              // ';'
-        S_30_ = 30,                              // '='
-        S_YYACCEPT = 31,                         // $accept
-        S_START = 32,                            // START
-        S_MAIN = 33,                             // MAIN
-        S_LIST_INST = 34,                        // LIST_INST
-        S_INSTRUCTION = 35,                      // INSTRUCTION
-        S_PRINT = 36,                            // PRINT
-        S_DECLARACION = 37,                      // DECLARACION
-        S_ASIGNACION = 38,                       // ASIGNACION
-        S_TIPOS_DECLARACION = 39,                // TIPOS_DECLARACION
-        S_EXPRESSION = 40,                       // EXPRESSION
-        S_INCREMENTINS = 41,                     // INCREMENTINS
-        S_INCREMENT = 42,                        // INCREMENT
-        S_PRIMITIVE = 43,                        // PRIMITIVE
-        S_BOOLEANO = 44,                         // BOOLEANO
-        S_TIPOS = 45                             // TIPOS
+        S_IGUALIGUALR = 14,                      // IGUALIGUALR
+        S_DIFERENTER = 15,                       // DIFERENTER
+        S_VOID = 16,                             // VOID
+        S_INT = 17,                              // INT
+        S_TSTRING = 18,                          // TSTRING
+        S_FLOTANTE = 19,                         // FLOTANTE
+        S_BOOLEAN = 20,                          // BOOLEAN
+        S_PARA = 21,                             // PARA
+        S_PARC = 22,                             // PARC
+        S_RMAIN = 23,                            // RMAIN
+        S_LLAVA = 24,                            // LLAVA
+        S_LLAVC = 25,                            // LLAVC
+        S_RTRUE = 26,                            // RTRUE
+        S_RFALSE = 27,                           // RFALSE
+        S_CORA = 28,                             // CORA
+        S_CORC = 29,                             // CORC
+        S_COMA = 30,                             // COMA
+        S_31_ = 31,                              // ';'
+        S_32_ = 32,                              // '='
+        S_YYACCEPT = 33,                         // $accept
+        S_START = 34,                            // START
+        S_MAIN = 35,                             // MAIN
+        S_LIST_INST = 36,                        // LIST_INST
+        S_INSTRUCTION = 37,                      // INSTRUCTION
+        S_PRINT = 38,                            // PRINT
+        S_DECLARACION = 39,                      // DECLARACION
+        S_ASIGNACION = 40,                       // ASIGNACION
+        S_TIPOS_DECLARACION = 41,                // TIPOS_DECLARACION
+        S_EXPRESSION = 42,                       // EXPRESSION
+        S_INCREMENTINS = 43,                     // INCREMENTINS
+        S_INCREMENT = 44,                        // INCREMENT
+        S_PRIMITIVE = 45,                        // PRIMITIVE
+        S_BOOLEANO = 46,                         // BOOLEANO
+        S_TIPOS = 47                             // TIPOS
       };
     };
 
@@ -671,6 +679,8 @@ namespace yy {
       case symbol_kind::S_DIV: // DIV
       case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
+      case symbol_kind::S_IGUALIGUALR: // IGUALIGUALR
+      case symbol_kind::S_DIFERENTER: // DIFERENTER
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -860,6 +870,8 @@ switch (yykind)
       case symbol_kind::S_DIV: // DIV
       case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
+      case symbol_kind::S_IGUALIGUALR: // IGUALIGUALR
+      case symbol_kind::S_DIFERENTER: // DIFERENTER
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -1238,6 +1250,36 @@ switch (yykind)
       make_PRINTF (const std::string& v, const location_type& l)
       {
         return symbol_type (token::PRINTF, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_IGUALIGUALR (std::string v, location_type l)
+      {
+        return symbol_type (token::IGUALIGUALR, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_IGUALIGUALR (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::IGUALIGUALR, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DIFERENTER (std::string v, location_type l)
+      {
+        return symbol_type (token::DIFERENTER, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_DIFERENTER (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::DIFERENTER, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1795,7 +1837,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 51,     ///< Last index in yytable_.
+      yylast_ = 65,     ///< Last index in yytable_.
       yynnts_ = 15,  ///< Number of nonterminal symbols.
       yyfinal_ = 21 ///< Termination state number.
     };
@@ -1823,8 +1865,8 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    29,
-       2,    30,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    31,
+       2,    32,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1846,10 +1888,10 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28
+      25,    26,    27,    28,    29,    30
     };
     // Last valid token kind.
-    const int code_max = 283;
+    const int code_max = 285;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1908,6 +1950,8 @@ switch (yykind)
       case symbol_kind::S_DIV: // DIV
       case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
+      case symbol_kind::S_IGUALIGUALR: // IGUALIGUALR
+      case symbol_kind::S_DIFERENTER: // DIFERENTER
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -1997,6 +2041,8 @@ switch (yykind)
       case symbol_kind::S_DIV: // DIV
       case symbol_kind::S_MOD: // MOD
       case symbol_kind::S_PRINTF: // PRINTF
+      case symbol_kind::S_IGUALIGUALR: // IGUALIGUALR
+      case symbol_kind::S_DIFERENTER: // DIFERENTER
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_TSTRING: // TSTRING
@@ -2081,7 +2127,7 @@ switch (yykind)
 
 
 } // yy
-#line 2085 "parser.hpp"
+#line 2131 "parser.hpp"
 
 
 

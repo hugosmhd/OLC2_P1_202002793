@@ -49,6 +49,8 @@ DECIMAL {NUMERO}"."{NUMERO}
 
 [ \t\v\r\n\f]             ; /* caracteres en blanco */
 
+"=="     return Parser::symbol_type( token::IGUALIGUALR, loc );
+"!="     return Parser::symbol_type( token::DIFERENTER, loc );
 "++"     return Parser::symbol_type( token::INC, loc );
 "+"     return Parser::symbol_type( token::SUMA, loc );
 "-"     return Parser::symbol_type( token::MENOS, loc );

@@ -38,14 +38,16 @@
     #include "parserctx.hpp"
 
     /*Expresiones*/
+    #include "Abstract/expression.hpp"
     #include "Expresiones/literal.hpp"
     #include "Expresiones/identificador.hpp"
     #include "Expresiones/aritmetica.hpp"
     #include "Expresiones/incremento.hpp"
     #include "Expresiones/negacionunaria.hpp"
-    #include "Abstract/expression.hpp"
+    #include "Expresiones/relacional.hpp"
     #include "Symbols/type.h"
     #include "Symbols/ArithmeticOption.h"
+    #include "Symbols/RelacionalOption.h"
 
     /* instrucciones */
     #include "Abstract/instruccion.hpp"
@@ -67,9 +69,11 @@
 
 /*tokens*/
 %token <std::string> NUMERO ID STRING DECIMAL INC SUMA MENOS POR DIV MOD PRINTF
+%token <std::string> IGUALIGUALR DIFERENTER
 %token <std::string> VOID INT TSTRING FLOTANTE BOOLEAN PARA PARC RMAIN LLAVA LLAVC RTRUE RFALSE CORA CORC COMA
 
 /* precedencia de operadores */
+%left IGUALIGUALR DIFERENTER
 %left SUMA MENOS
 %left POR DIV MOD
 
@@ -152,6 +156,8 @@ EXPRESSION: EXPRESSION SUMA EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MAS); }
     | EXPRESSION POR EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,PRODUCTO); }
     | EXPRESSION DIV EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,DIVISION); }
     | EXPRESSION MOD EXPRESSION { $$ = new Aritmetica(0,0,$1,$3,MODULO); }
+    | EXPRESSION IGUALIGUALR EXPRESSION { $$ = new Relacional(0,0,$1,$3,IGUALIGUAL); }
+    | EXPRESSION DIFERENTER EXPRESSION { $$ = new Relacional(0,0,$1,$3,DIFERENTE); }
     | MENOS EXPRESSION { $$ = new NegacionUnaria(0,0,$2); }
     | PRIMITIVE { $$ = $1; }
     | ID { $$ = new Identificador(0,0,$1); }
