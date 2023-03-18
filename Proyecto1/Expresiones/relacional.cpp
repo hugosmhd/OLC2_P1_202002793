@@ -179,6 +179,306 @@ Symbol Relacional::ejecutar(Environment *env) {
             std::cout << valor_final << std::endl;
             result = Symbol(line, column, "", BOOL, &valor_final);
         }
+    } else if(this->type == MAYOR) {
+        std::cout << "Mayor que" << std::endl;
+        if(nodo_izq.type == INTEGER && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<float*>(nodo_der.value);
+            double val2 = (double)*static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == INTEGER) {
+            double val1 = (double)*static_cast<int*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == BOOL) {
+            double val1 = *static_cast<bool*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 > val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        }
+    } else if(this->type == MENOR) {
+        std::cout << "Menor que" << std::endl;
+        if(nodo_izq.type == INTEGER && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = (double)*static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == INTEGER) {
+            double val1 = (double)*static_cast<int*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == BOOL) {
+            double val1 = *static_cast<bool*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 < val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        }
+    } else if(this->type == MAYORIGUAL) {
+        std::cout << "Mayor igual" << std::endl;
+        if(nodo_izq.type == INTEGER && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = (double)*static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == INTEGER) {
+            double val1 = (double)*static_cast<int*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == BOOL) {
+            double val1 = *static_cast<bool*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 >= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        }
+    } else if(this->type == MENORIGUAL) {
+        std::cout << "Menor igual" << std::endl;
+        if(nodo_izq.type == INTEGER && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = (double)*static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == INTEGER) {
+            double val1 = (double)*static_cast<int*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == INTEGER && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<int*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == INTEGER) {
+            int val1 = *static_cast<int*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == FLOAT && nodo_der.type == BOOL) {
+            double val1 = *static_cast<bool*>(nodo_der.value);
+            double val2 = *static_cast<double*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == FLOAT) {
+            double val1 = *static_cast<double*>(nodo_der.value);
+            double val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        } else if(nodo_izq.type == BOOL && nodo_der.type == BOOL) {
+            int val1 = *static_cast<bool*>(nodo_der.value);
+            int val2 = *static_cast<bool*>(nodo_izq.value);
+            std::cout << val1 << std::endl;
+            std::cout << val2 << std::endl;
+            valor_final = val1 <= val2 ? true : false;
+            std::cout << valor_final << std::endl;
+            result = Symbol(line, column, "", BOOL, &valor_final);
+        }
     }
 
     return result;
